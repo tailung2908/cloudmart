@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    image: cloudmart-backend:latest
+    container_name: cloudmart-backend
+    build:
+      context: ./applications/backend
+    ports:
+      - "8000:8000"
+
+  frontend:
+    image: cloudmart-frontend:latest
+    container_name: cloudmart-frontend
+    build:
+      context: ./applications/frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      - VITE_BACKEND_URL=http://backend:8000
